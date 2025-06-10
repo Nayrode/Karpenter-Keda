@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: my-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: my-deployment
+  pollingInterval: 30
+  cooldownPeriod:  300
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://prometheus.default.svc:9090
+      metricName: http_requests_total
+      threshold: '100'
+      query: sum(rate(http_requests_total[1m]))
