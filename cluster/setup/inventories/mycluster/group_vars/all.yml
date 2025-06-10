@@ -1,0 +1,13 @@
+# Adresse IP privée de la VM control plane (interface interne)
+kube_network_plugin: calico
+
+# Utilisation des IP privées pour la communication interne
+kube_api_ip: "{{ hostvars['kube-cp-1']['ip'] }}"
+
+# Interface utilisée pour le trafic cluster
+# Par exemple ens19 correspond à l'interface privée sur chaque VM
+calico_interface: "eth1"
+
+# User et clé SSH
+ansible_user: dtetu
+ansible_ssh_private_key_file: ~/.ssh/id_ed25519

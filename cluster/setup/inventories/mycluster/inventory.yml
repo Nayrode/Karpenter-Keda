@@ -1,0 +1,41 @@
+all:
+  hosts:
+    kube-cp-1:
+      ansible_host: 162.38.112.161
+      ansible_user: dtetu
+      ansible_ssh_private_key_file: ~/.ssh/private_key
+      ip: 10.15.50.51
+      
+    kube-worker-1:
+      ansible_host: 10.15.50.52
+      ansible_user: dtetu
+      ansible_ssh_private_key_file: ~/.ssh/private_key
+      ansible_ssh_common_args: '-o ProxyJump=dtetu@162.38.112.161'
+      ip: 10.15.50.52
+
+    kube-worker-2:
+      ansible_host: 10.15.50.53
+      ansible_user: dtetu
+      ansible_ssh_private_key_file: ~/.ssh/private_key
+      ansible_ssh_common_args: '-o ProxyJump=dtetu@162.38.112.161'
+      ip: 10.15.50.53
+
+  children:
+    kube_control_plane:
+      hosts:
+        kube-cp-1:
+
+    kube_node:
+      hosts:
+        kube-cp-1:
+        kube-worker-1:
+        kube-worker-2:
+
+    etcd:
+      hosts:
+        kube-cp-1:
+
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
