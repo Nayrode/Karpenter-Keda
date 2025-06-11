@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keda-test-spammer
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keda-test-spammer
+  template:
+    metadata:
+      labels:
+        app: keda-test-spammer
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: spammer
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              while true; do
+                wget -qO- http://my-service.default.svc.cluster.local/ || true;
+              done
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+              ephemeral-storage: 128Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi

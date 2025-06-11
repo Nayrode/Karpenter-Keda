@@ -6,4 +6,4 @@ pipx inject ansible-core distlib
 
 ansible-playbook -i inventories/mycluster/inventory.yml --become kubespray-playbook.yml
 
-sudo ./setup.sh
+kubectl --kubeconfig ~/.kube/config --insecure-skip-tls-verify=true get nodes

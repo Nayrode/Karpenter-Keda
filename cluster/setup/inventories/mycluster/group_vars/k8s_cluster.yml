@@ -1,0 +1,4 @@
+kube_apiserver_cert_extra_sans:
+  - "10.15.50.51"
+  - "162.38.112.161"
+  - "kube-cp-1"
