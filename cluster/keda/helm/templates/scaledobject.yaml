@@ -6,12 +6,9 @@ metadata:
 spec:
   scaleTargetRef:
     name: my-deployment
-  pollingInterval: 30
-  cooldownPeriod:  300
-  minReplicaCount: 1
-  maxReplicaCount: 10
   triggers:
-    - type: cpu
-      metadata:
-        type: Utilization
-        value: "50"
+  - type: cpu
+    metricType: Utilization
+    metadata:
+      value: "10"
+

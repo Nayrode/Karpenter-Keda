@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ab-spam-job
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: ab
+        image: jordi/ab
+        command: ["ab", "-n", "1000000", "-c", "50", "http://my-service.default.svc.cluster.local/"]
